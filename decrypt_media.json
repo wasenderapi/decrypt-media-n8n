@@ -1,0 +1,102 @@
+{
+  "name": "decrypt-media",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "9bbc458d-4116-46b4-b0b1-baca79dcab5f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -140,
+        -40
+      ],
+      "id": "9ba71b6d-f9dc-4789-a0f3-4e91e6834862",
+      "name": "Webhook",
+      "webhookId": "9bbc458d-4116-46b4-b0b1-baca79dcab5f"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.wasenderapi.com/api/decrypt-media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "data",
+              "value": "={{ $json.body.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        100,
+        -100
+      ],
+      "id": "0eb204db-a81b-4a52-a87e-9f956337144b",
+      "name": "Decrypt Media",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "wOnLHiqB72eDgStJ",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.publicUrl }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        -40
+      ],
+      "id": "caedabad-767c-494f-a344-385bbae9611a",
+      "name": "Download Media"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Decrypt Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decrypt Media": {
+      "main": [
+        [
+          {
+            "node": "Download Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cdabb4ed-45c9-4cac-83e1-9469df369884",
+  "meta": {
+    "instanceId": "5ef820277ff161196eed44d73df38a5bd31cf13e6bb91504e52772fa52676245"
+  },
+  "id": "t78m2ph27pnmTs9q",
+  "tags": []
+}
